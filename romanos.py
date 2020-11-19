@@ -2,10 +2,6 @@ simbolos = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1}
 tipo_5 =("V", "D", "L")
 tipo_1 =("I", "X", "C", "M")
 
-restas = ("CD", "CM", "XL", "XC", "IV", "IX")
-restasC = ("CD", "CM")
-restasD = ("XL", "XC")
-restasU = ("IV", "IX")
 
 def simbolo_a_entero(simbolo):
 
@@ -67,3 +63,49 @@ def romano_a_entero(romano):
         valor_anterior = letra
 
     return suma
+
+def descomponer(numero):
+    if not isinstance(numero, int):
+        raise SyntaxError (f"{numero} no es un numero natural")
+
+    l = []
+    for d in str(numero):
+        l.append(int(d))
+    return l
+
+listas_millares = ("M")
+listas_centenas = ("C", "D", "M")
+listas_decenas = ("X", "L", "C")
+listas_unidades = ("I", "V", "X")
+
+lista_ordenes= [listas_millares, listas_centenas, listas_decenas, listas_unidades]
+
+def convertir(orden_magnitud):
+    contador = 0
+    resultado = []
+    for orden in orden_magnitud[::-1]:
+        resultado.append(procesar_simbolo(orden, lista_ordenes[contador]))
+        contador +=1
+
+    return "".join(resultado.reverse())
+
+def procesar_simbolo(s, clave):
+    if s == 9:
+        return clave[0] + clave [2]
+    elif s > 5:
+        return clave[1]+clave[0]*(s-5)
+    elif s ==4
+        return clave[0]+clave[1]
+    else:
+        return clave[0]*s
+
+def entero_a_romano(numero):
+    if not isinstance(numero, int):
+        raise SyntaxError(f"{numero} no es un numero natural")
+
+    if numero < 1 or numero > 3999:
+        raise OverflowError(f"{numero} ha de estas entre 1 y 3999")
+
+    ordenes_de_magnitud = descomponer (numero)
+    romano = convertir(ordenes_de_magnitud)
+    return romano
